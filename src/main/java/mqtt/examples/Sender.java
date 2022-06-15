@@ -39,6 +39,10 @@ public class Sender {
     }
 
     public static void main(String[] args) {
+        if (args.length < 1) {
+            System.err.println("Usage");
+            System.exit(1);
+        }
         MqttCmdOptions options = parseArgs(args);
 
         try {
@@ -65,14 +69,16 @@ public class Sender {
         // FIXME This seems to be non-configurable ????
         out.clientId = DEFAULT_CLIENT_ID;
 
-        // See if a topic names was provided on the command line
+        out.server = DEFAULT_SERVER;
+        out.port = DEFAULT_PORT;
+        out.broker = DEFAULT_BROKER;
+
         if ( args.length == 1) {
-            out.server = DEFAULT_SERVER;
-            out.port = DEFAULT_PORT;
+            // See if only a topic name was provided on the command line - i.e. local testing with defaults
             out.topic = args[0];
-            out.broker = DEFAULT_BROKER;
             return out;
         } else {
+            // Otherwise, do a full parse
             for ( int i = 0; i < args.length; i = i + 1 ) {
                 switch ( args[i] ) {
                     case "server":
@@ -179,7 +185,6 @@ public class Sender {
             throw me;
         }
     }
-
 
     class ResponseSubscriber implements Runnable, IMqttMessageListener {
         private final String topic;
