@@ -1,1 +1,1 @@
-java -cp target/mqtt_sender-1.0-SNAPSHOT.jar Sender  $1 $2 $3 $4 $5 $6
+java -cp target/mqtt_sender-1.0-SNAPSHOT.jar mqtt.examples.Sender  $1 $2 $3 $4 $5 $6
